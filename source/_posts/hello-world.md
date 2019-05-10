@@ -8,6 +8,7 @@ Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [docume
 ### Create a new post
 
 ``` bash
+### 2019-5-10
 $ hexo new "My New Post"
 ```
 
