@@ -153,7 +153,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 分钟 读完 (大约 121 个字)
+                    2 分钟 读完 (大约 247 个字)
                 </span>
                 
                 
@@ -166,8 +166,10 @@
             
         </h1>
         <div class="content">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">### 2019-1-10</span></span><br><span class="line">$ hexo new <span class="hljs-string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+            <blockquote>
+<p>想到这么干就要是最近使用了nextjs，按这种形式去写真的很能偷懒。完全不用花太多的经历去管理功能模块在形式上的连接关系，只要做完注解，工厂函数在初始化的时候自动就会帮我们把信息组织好了。所以，从用过这个框架之后，对于注解也有一点认识了，起码在nestjs里面它所发挥的作用是帮助开发者去组织功能之间的关系。</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="nest的web服务端的结构"><a href="#nest的web服务端的结构" class="headerlink" title="nest的web服务端的结构"></a>nest的web服务端的结构</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">### 控制器，用来提供具体的接口</span></span><br><span class="line">@Controller(<span class="hljs-string">'/user'</span>)</span><br><span class="line">class UserController &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">### 服务，提供数据操作</span></span><br><span class="line">@Injectable()</span><br><span class="line">class UserService &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">### 模块，</span></span><br><span class="line">$ hexo new <span class="hljs-string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
@@ -214,13 +216,13 @@
                     
                     
                     <p class="is-size-6 is-block">
-                        Your title
+                        前端小工，职业搬砖
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>Your location</span>
+                        <span>上海</span>
                     </p>
                     
                 </div>
@@ -233,7 +235,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        2
+                        1
                     </p>
                 </div>
             </div>
@@ -243,7 +245,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        4
+                        2
                     </p>
                 </div>
             </div>
@@ -253,7 +255,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        2
+                        1
                     </p>
                 </div>
             </div>
@@ -272,27 +274,21 @@
                 
             </a>
             
-            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="https://facebook.com">
+            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="https://www.facebook.com/profile.php?id=100013343299056">
                 
                 <i class="fab fa-facebook"></i>
                 
             </a>
             
-            <a class="level-item button is-white is-marginless" target="_blank" title="Twitter" href="https://twitter.com">
+            <a class="level-item button is-white is-marginless" target="_blank" title="Twitter" href="https://twitter.com/ERROR_Lw">
                 
                 <i class="fab fa-twitter"></i>
                 
             </a>
             
-            <a class="level-item button is-white is-marginless" target="_blank" title="Dribbble" href="https://dribbble.com">
+            <a class="level-item button is-white is-marginless" target="_blank" title="知乎" href="https://dribbble.com">
                 
-                <i class="fab fa-dribbble"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
-                
-                <i class="fas fa-rss"></i>
+                <i class="fab fa-zhihu"></i>
                 
             </a>
             
@@ -351,22 +347,6 @@
             </h3>
             <ul class="menu-list">
             <li>
-        <a class="level is-marginless" href="/categories/plugin/">
-            <span class="level-start">
-                <span class="level-item">plugin</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/plugin/akd/">
-            <span class="level-start">
-                <span class="level-item">akd</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/react/">
             <span class="level-start">
                 <span class="level-item">react</span>
@@ -394,7 +374,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/hello/" style="font-size: 10px;">hello</a> <a href="/tags/redux/" style="font-size: 10px;">redux</a>
+        <a href="/tags/redux/" style="font-size: 10px;">redux</a>
     </div>
 </div>
 
@@ -428,25 +408,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/01/12/hello-world/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/deer.jpg" alt="Hello World">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-01-11T16:00:00.000Z">2019-01-12</time></div>
-                    <a href="/2019/01/12/hello-world/" class="has-link-black-ter is-size-6">Hello World</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/plugin/">plugin</a> / <a class="has-link-grey -link" href="/categories/plugin/akd/">akd</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -470,17 +431,6 @@
             </a>
         </li>
         
-        <li>
-            <a class="level is-marginless" href="/archives/2019/01/">
-                <span class="level-start">
-                    <span class="level-item">一月 2019</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
         </ul>
         </div>
     </div>
@@ -493,13 +443,6 @@
                 标签
             </h3>
             <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/hello/">
-                        <span class="tag">hello</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/redux/">
@@ -550,25 +493,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/01/12/hello-world/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/deer.jpg" alt="Hello World">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-01-11T16:00:00.000Z">2019-01-12</time></div>
-                    <a href="/2019/01/12/hello-world/" class="has-link-black-ter is-size-6">Hello World</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/plugin/">plugin</a> / <a class="has-link-grey -link" href="/categories/plugin/akd/">akd</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -592,17 +516,6 @@
             </a>
         </li>
         
-        <li>
-            <a class="level is-marginless" href="/archives/2019/01/">
-                <span class="level-start">
-                    <span class="level-item">一月 2019</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
         </ul>
         </div>
     </div>
@@ -615,13 +528,6 @@
                 标签
             </h3>
             <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/hello/">
-                        <span class="tag">hello</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/redux/">
@@ -660,22 +566,6 @@
             
                 <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
                 
-                
-                <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
-                        
-                        <i class="fab fa-creative-commons"></i>
-                        
-                    </a>
-                </p>
-                
-                <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
-                        
-                        <i class="fab fa-creative-commons-by"></i>
-                        
-                    </a>
-                </p>
                 
                 <p class="control">
                     <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ERROR-LWEI">
