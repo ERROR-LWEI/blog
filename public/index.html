@@ -132,6 +132,67 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-30T13:33:00.000Z">2019-05-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/typescript/">typescript</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1619 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/05/30/typecript中的reflectApi元编程/">typecript中的reflectApi元编程</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="元编程"><a href="#元编程" class="headerlink" title="元编程"></a>元编程</h3><blockquote>
+<p>元编程（Metaprogramming）是指某类计算机程序的编写，这类计算机程序编写或者操纵其他程序（或者自身）作为它们的数据，或者在运行时完成部分本应在编译时完成的工作。很多情况下与手工编写全部代码相比工作效率更高。编写元程序的语言称之为元语言，被操作的语言称之为目标语言。一门语言同时也是自身的元语言的能力称之为反射。</p>
+</blockquote>
+<p>这个是一个很抽象的概念，作为非计算机类专业的好像也不太好班门弄斧去解释这个概念。只能从字面去说一下自己的认识。“元编程”字面就是对原子进行编程，在具体使用中这个原子可以细化到一个变量也可以扩展到一个函数功能和一个对象。编程的概念其实描述的是一个过程，从输入到产出的一个整体的过程，开发者通过代码参与这个过程控制过程的流向。元编程的话，假设在一个过程中有一个a功能对象是专门用于处理一个订单分发策略的，那么这其中一定会有根据不同的标注信息做不同的动作，虽然同一个功能对象但是能根据不同的信息产生不同的效果（可能这就是控制反转，在不修改代码内部的情况下通过外部标注信息的修改达到修改结果的目的）。</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import &apos;reflect-metadata&apos;;</span><br><span class="line"></span><br><span class="line">@Module(&#123;</span><br><span class="line">    import: [],</span><br><span class="line">    controller: [],</span><br><span class="line">    exports: [],</span><br><span class="line">&#125;)</span><br><span class="line">class Test &#123;</span><br><span class="line">    constructor(props) &#123;&#125;</span><br><span class="line">    @Reflect.metadata(&apos;hello&apos;, &apos;word&apos;)</span><br><span class="line">    getService() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用reflect对类进行元数据的添加，在class外和class内使用装饰器去处理target目标有所不同。module部分修饰的目标是类本身，metadata部分修饰的是类的原型链对象prototype上的属性。前者如果在程序启动后获取的一般是未实例化下的类型注解，后者能获取到的注解信息是实例化后的对象的。</p>
+<h4 id="nestjs使用注解对元子进行操作的特点"><a href="#nestjs使用注解对元子进行操作的特点" class="headerlink" title="nestjs使用注解对元子进行操作的特点"></a>nestjs使用注解对元子进行操作的特点</h4><h5 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h5><p>@Module<br>这个是注解一个模块类型的，在nest去编写node服务时使用module表明这是一个模块类型的类，同时在内部做到了从path资源路径到module的关联。内部做到将module名称转换到path的过程，同时module的概念包含了service与import信息。<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">例：</span><br><span class="line">/user/info/add</span><br><span class="line">/user/msg/detail</span><br><span class="line">这样一个资源路径转换成module</span><br><span class="line">        user</span><br><span class="line">    info    msg</span><br><span class="line">add             detail</span><br><span class="line">应用的全局其实就维护着这样一个信息，信息的获取与组织就通过注解去完成了。</span><br></pre></td></tr></table></figure></p>
+<p>每一个类型注解对应一套处理规则，module类型用于组织资源的关联信息Inject类型负责组织在module类传递的服务依赖信息。说回module的另一个注解信息exports，exports的功能用于导出service服务。无导出情况下service操作只在module内部可见，有导出操作后module的service功能在父子兄弟之间传递共享，所要应对的情况是：在detail内可能需要调用add的数据操作功能，因为service操作最终还是db操作的实体化。所以需要具备导出操作。<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import起到连接module的作用建立上下级关系同时具备service的传导操作</span><br><span class="line">    import</span><br><span class="line">user  =&gt;  info</span><br><span class="line">user  =&gt;  msg</span><br><span class="line">    service</span><br><span class="line">user  &lt;=  info</span><br><span class="line">user  &lt;=  msg</span><br><span class="line">这类似与在父进程中兄弟线程的共享内存</span><br></pre></td></tr></table></figure></p>
+<h5 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h5><p>直观点按nest的操作来看就是<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@module(&#123;</span><br><span class="line">    import: [],</span><br><span class="line">    controller: [UserController],</span><br><span class="line">    provider: [UserService]</span><br><span class="line">&#125;)</span><br><span class="line">class User &#123;&#125;</span><br><span class="line"></span><br><span class="line">// 内部其实大概是这样的</span><br><span class="line">new UserController(new UserService)</span><br><span class="line"></span><br><span class="line">class UserService &#123;</span><br><span class="line">    constructor(userservice: UserService) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 注入的过程在工厂函数构建应用时完成的</span><br></pre></td></tr></table></figure></p>
+<h5 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h5><p>应用组织完成后，从前端调用接口到最后的数据操作大概要走下面的过程<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db &lt;= service &lt;= controller</span><br></pre></td></tr></table></figure></p>
+<h4 id="模型转到前端"><a href="#模型转到前端" class="headerlink" title="模型转到前端"></a>模型转到前端</h4><p>把这套方式转到前端处理的化，视图层先不管那只是很外在的东西不管界面长得千奇百怪最后还是要进行操作执行action去触发请求动作。所以重要的是收集存在的action动作信息更新创建等如果用saga的task概念去管理异步的化就可以将一个动作集合整合到一个task任务中去处理减少在视图层的组合请求动作（如前后一个动作依赖前一个动作的结果）这样能减少视图层逻辑的复杂度，增加应用的移植性，另外在saga中有管道的概念相同的动作能做到顺序执行并能暂停和重启回退这对于频繁的操作能起到很好的抗压作用。所以重要点其实不在视图层而是在redux应用的整个action动作的流程。</p>
+<h5 id="redux应用的中心"><a href="#redux应用的中心" class="headerlink" title="redux应用的中心"></a>redux应用的中心</h5><p>redux应用的整体使用状态去控制，一个action触发的是一个操作状态ADD_DETAIL之类的。需要组织的是应用的状态管理。那么基础的元数据就是应用的状态一个函数是用来处理何种状态的。<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对应关系</span><br><span class="line">db &lt;= service &lt;= controller</span><br><span class="line">store &lt;= action &lt;= view</span><br></pre></td></tr></table></figure></p>
+<h5 id="store"><a href="#store" class="headerlink" title="store"></a>store</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Store(&apos;user&apos;)</span><br><span class="line">class User &#123;</span><br><span class="line">    constructor() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @type(&apos;ADD_USER&apos;)</span><br><span class="line">    function add(state, action) &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @type(&apos;UPDATA_USER&apos;)</span><br><span class="line">    function updata(state, action) &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="action"><a href="#action" class="headerlink" title="action"></a>action</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Action()</span><br><span class="line">class UserAction &#123;</span><br><span class="line">    constructor(user: User) &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    @post(&apos;/api/user&apos;, &apos;json&apos;)</span><br><span class="line">    function add(params) &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            type: user.ADD_USER</span><br><span class="line">            params: &#123;</span><br><span class="line">                ...params</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="view"><a href="#view" class="headerlink" title="view"></a>view</h5><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@View</span><br><span class="line">class User extends React.Component &#123;</span><br><span class="line">    constructor() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function View(state, action) &#123;</span><br><span class="line">    return function(Target) &#123;</span><br><span class="line">        return connect(state, action)(Target)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="import"><a href="#import" class="headerlink" title="import"></a>import</h4><p>nest中import完成了module中资源路径前前后关系，转换到前端可以用import去关系整个路由的前后关系。这样也省去前端去管理路由的额外的开发时间。</p>
+<p>最主要的还是借鉴nest的方式想将应用的路由，api，状态管理的额外开发量合并到开发具体功能中省去这部分的时长。这部分的信息大多散落在各个文件中，不利于管理。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-05-23T11:54:28.000Z">2019-05-23</time>
                 
                 <div class="level-item">
@@ -219,7 +280,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        1
+                        2
                     </p>
                 </div>
             </div>
@@ -229,7 +290,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        1
+                        2
                     </p>
                 </div>
             </div>
@@ -239,7 +300,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        1
+                        2
                     </p>
                 </div>
             </div>
@@ -338,6 +399,14 @@
             <span class="level-end">
                 <span class="level-item tag">1</span>
             </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/typescript/">
+            <span class="level-start">
+                <span class="level-item">typescript</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
         </a></li>
             </ul>
         </div>
@@ -350,7 +419,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/HTML/" style="font-size: 10px;">HTML</a>
+        <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a>
     </div>
 </div>
 
@@ -364,6 +433,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/05/30/typecript中的reflectApi元编程/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="typecript中的reflectApi元编程">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-30T13:33:00.000Z">2019-05-30</time></div>
+                    <a href="/2019/05/30/typecript中的reflectApi元编程/" class="has-link-black-ter is-size-6">typecript中的reflectApi元编程</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/typescript/">typescript</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -402,7 +490,7 @@
                     <span class="level-item">五月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -423,6 +511,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/HTML/">
                         <span class="tag">HTML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/reflect/">
+                        <span class="tag">reflect</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -452,6 +547,25 @@
         
         <article class="media">
             
+            <a href="/2019/05/30/typecript中的reflectApi元编程/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="typecript中的reflectApi元编程">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-30T13:33:00.000Z">2019-05-30</time></div>
+                    <a href="/2019/05/30/typecript中的reflectApi元编程/" class="has-link-black-ter is-size-6">typecript中的reflectApi元编程</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/typescript/">typescript</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/05/23/a跳转操作/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="a跳转操作">
@@ -487,7 +601,7 @@
                     <span class="level-item">五月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -508,6 +622,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/HTML/">
                         <span class="tag">HTML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/reflect/">
+                        <span class="tag">reflect</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
