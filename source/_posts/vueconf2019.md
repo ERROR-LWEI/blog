@@ -2,8 +2,9 @@
 title: vueconf2019
 date: 2019-06-08 20:06:08
 tags: 学习
-category
-    - 会议
+category:
+    - 
+        会议
 ---
 
 ### 前言
