@@ -15,7 +15,7 @@ web应用其实可以解释成浏览器的子产品和小程序如出一辙，�
 
 #### 浏览器的功能结构
 从web前端转换到其他端js前端开发时，其实回头继续看浏览器就可以了，js在其中的位置大致相同。如果只是做js这端的基础开发只需要了解js引擎与宿主的对接关系就能处理了。
-<div align=center><img src="../gallery/webkit.jpeg" width="800" align=center />
+<div align=center><img src="/gallery/webkit.jpeg" width="800" align=center />
 </div>
 <br/>
 <br/>
@@ -37,14 +37,14 @@ HTMLTokenizer是内核中的一个c++类，用来做词法分析检验文档词�
 命名还是很好理解的，所以写啥注释，命名好了大概就是提示了。
 <br/>
 <div align=center>
-    <img src="../gallery/ma.jpeg" width="800" align=center />
-    <img src="../gallery/string.jpeg" width="800" align=center />
+    <img src="/gallery/ma.jpeg" width="800" align=center />
+    <img src="/gallery/string.jpeg" width="800" align=center />
 </div>
 <br/>
 这其中也包含一部分xss攻击的处理，对于包含非法信息的标签进行过滤。在进行视图对接前就将数据处理干净，默默的感觉有点像接口参数校验。
 <br/>
 <br/>
-<div align=center><img src="../gallery/morphology.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/morphology.jpeg" width="800" align=center/>
 </div>
 <br/>
 ##### HTMLDocumentParser
@@ -60,17 +60,17 @@ HTMLTokenizer是内核中的一个c++类，用来做词法分析检验文档词�
 ```
 HTMLDocumentParser内部调用的是HTMLTreeBuilder的constructTree方法进行词语到节点的转化，然后看c++的语法是真漂亮虽然多很多代码。其中很多这种std::是它的智能指针功能，内部有引用计数做垃圾回收。经过前两步处理完的数据最后的节点信息就是即将进行渲染的信息，html和js交互处理的实际上是这部分信息，比如在html加载的过程遇到js控制dom更改的过程。GUI和js访问的是同一个资源信息，GUI根据节点信息渲染dom，当js申请操作修改时节点信息就被锁住，GUI工作就需要被暂停，当js修改信息完成资源访问就被释放。
 <br/>
-<div align=center><img src="../gallery/treebuild.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/treebuild.jpeg" width="800" align=center/>
 </div>
-<div align=center><img src="../gallery/treefun.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/treefun.jpeg" width="800" align=center/>
 </div>
-<div align=center><img src="../gallery/pross.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/pross.jpeg" width="800" align=center/>
 </div>
 <br/>
 ##### node系统
 node系统可以说是webkit最核心的功能，它赋予了js中的document下所有dom中的各种能力，比如调用底层注册事件等。不能完全看明白或者理解oop是什么，不过能学习到如何通过oop的方式去进行多系统的对接，可以把node与其他系统的连接看成下面这种形式。
 <br/>
-<div align=center><img src="../gallery/node-tree.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/node-tree.jpeg" width="800" align=center/>
 </div>
 <br/>
 ```
@@ -112,7 +112,7 @@ class Node extends Event, GuI {
 ```
 ###### react中通过继承做界面的组合
 真的比较懒所以这个图真的有点丑！这个方式是从其他人那里学到的，不过他的方式是不做整体页面的组合，都是做颗粒度比较小的界面部件的类型封装，这种是很灵活的。
-<div align=center><img src="../gallery/react.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/react.jpeg" width="800" align=center/>
 </div>
 ```
 ### js没有多继承搞这种真的是有点不舒服
@@ -203,11 +203,11 @@ class List extends SearchBtn {
 ```
 
 node通过继承将各种能力添加到dom中，拆看来看单个父类的功能是很纯净的。在Event中自己维护和系统事件的对接，当监听到某一事件的触发，就调用注册的监听的控制器传入上层，在底层系统中的事件处理是没有目标的这个概念只有事件类型input类型事件click类型事件。这个处理方式也是对于本系统可控的方式的一点，系统的边界必须明确，比如从a-b的对接，其实我并不知道具体是a里面的谁要求做了这件事,事实是b也不需要知道。如果b连谁做了也要分析的话今天有abc申请了明天有mgn申请了，那这也太头痛了我只需要知道自己能处理的是input操作click操作处理了就丢出去你自己找是谁申请的。所以到前端这边也就存在了捕获和冒泡这种东西。为了保持底层的在移植的过程中的通用性。同时将对接的多个能力拆分到不同的类型中，分散治理将功能隔离开。
-<div align=center><img src="../gallery/event.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/event.jpeg" width="800" align=center/>
 </div>
-<div align=center><img src="../gallery/event-sys.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/event-sys.jpeg" width="800" align=center/>
 </div>
-<div align=center><img src="../gallery/addle1.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/addle1.jpeg" width="800" align=center/>
 </div>
 ```
 function add(a, b, c, d) {
@@ -220,7 +220,7 @@ function add(a, b, c, d) {
 #### vdom
 vdom有点像在js这端做的从html到节点转换的工作，当然附加了更多的运行时的数据，包含原有dom比原有dom的信息更丰富。react，vue之前的dom是由html文档提供初始化的视图数据浏览器解析然后返回到js，js属于直接操作dom，因为js本地其实是不存储视图关系（也可以用jq去实现vdom），所以有更改就要直接调用api操作浏览器内部的数据，vdom所解决的就是视图数据在前端的管理以及控制js这端调用浏览器操作的频率。
 
-<div align=center><img src="../gallery/vdom.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/vdom.jpeg" width="800" align=center/>
 </div>
 <br/>
 <br/>
@@ -239,7 +239,7 @@ vdom = {
 由于vdom是对于dom的一种反应，所以在前端js层是一个多叉树的结构去存储视图数据的，每个节点就是一个完整的fiber。前端开发使用vue或者react这套方案去做本质还是对一颗树的节点进行操作。所以，就会涉及到对于树的查找对于树的节点替换更新。多叉树的查找性能随着树的深度而加深，diff方案优化的是在前端对于数据树中的单个更新节点的查找，最后的更新还是整棵树的更新。
 <br/>
 <br/>
-<div align=center><img src="../gallery/treeu.jpeg" width="800" align=center/>
+<div align=center><img src="/gallery/treeu.jpeg" width="800" align=center/>
 </div>
 <br/>
 <br/>
